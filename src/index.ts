@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import cookieSession from 'cookie-session';
 import { routes } from './routes/routes';
 
 
@@ -8,6 +9,7 @@ const PORT = process.env.PORT ?? 3000;
 const BASE_PATCH = `http://localhost:`;
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieSession({keys: ['correct string']}));
 app.use('/favicon.ico', express.static('./images/css-3-icon.png'));
 app.use(routes);
 

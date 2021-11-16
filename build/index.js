@@ -42,11 +42,13 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var express_1 = __importDefault(require("express"));
+var cookie_session_1 = __importDefault(require("cookie-session"));
 var routes_1 = require("./routes/routes");
 var app = express_1.default();
 var PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
 var BASE_PATCH = "http://localhost:";
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use(cookie_session_1.default({ keys: ['correct string'] }));
 app.use('/favicon.ico', express_1.default.static('./images/css-3-icon.png'));
 app.use(routes_1.routes);
 function server() {

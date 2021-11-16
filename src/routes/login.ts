@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/login', (req: Request, res: Response): void => {
   res.send(`
-    <form method="POST">
+    <form method="POST" novalidate>
       <div>
         <label>Email</label>
         <input name="email" type="text" />
@@ -21,19 +21,18 @@ router.get('/login', (req: Request, res: Response): void => {
     </form>
 
     <a href="/">Go back home</a>
-  `)
+  `).type('html');
 });
 
 router.post('/login', (req: RequestWithBody, res: Response): void => {
   const {email, password} = req.body;
-
-  res.send(`
-    <h2>email: ${email ? email.toUpperCase() : 'your email: undefined'}</h2>
-    </br>
-    <p> password: ${password}</p>
-    </br>
-    <a href="/login">Go back login</a>
-  `);
+  if (email && password && email === 'interind@yandex.ru' && password === '727431') {
+    req.session = { loggedIn: true, email: email.toLowerCase() };
+    res.redirect('/');
+  } else {
+    req.session = undefined;
+    res.status(401).send('invalid email or password');
+  }
 })
 
 export { router as login };
